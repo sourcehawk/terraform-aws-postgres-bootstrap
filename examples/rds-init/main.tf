@@ -42,8 +42,8 @@ module "rds_init" {
         max_allocated_storage      = 25   # Gb - must increase at least 10%
         deletion_protection        = false
         skip_final_snapshot        = true
-        existing_user_credentials  = null # use when importing existing db
-        regenerate_password        = true
+        existing_user_credentials  = null  # use when importing existing db
+        regenerate_password        = false # set to true to regenerate password
         allowed_cidrs              = var.allowed_cidrs
         parameter_group = [
           {
