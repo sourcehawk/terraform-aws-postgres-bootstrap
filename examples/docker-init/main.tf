@@ -113,7 +113,8 @@ module "postgres_init" {
 
   users = [
     { id = "user_for_db_1", name = "user_1", password = "foobarbaz" },
-    { id = "user_for_db_2", name = "user_3", old_name = "user_2" }
+    { id = "user_for_db_2", name = "user_2" }
+    # { id = "user_for_db_2", name = "user_3", old_name = "user_2" } # To update username
   ]
   databases = [
     {
