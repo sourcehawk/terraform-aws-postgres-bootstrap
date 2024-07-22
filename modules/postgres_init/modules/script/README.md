@@ -33,7 +33,7 @@ module "postgres_script" {
 
 ### What to script?
 
-While many examples might show simple SQL statements like `INSERT` or `CREATE TABLE`, those are typically better handled with other migration tools. Scripting in this module should be used for bootstrapping functionality that requires Infrastructure as Code (IaC). This can be for examples this such as:
+While many examples might show simple SQL statements like `INSERT` or `CREATE TABLE`, those are typically better handled with other migration tools. Scripting in this module should be used for bootstrapping functionality that requires Infrastructure as Code (IaC). This can be for examples:
 
 1. **Setting User Roles**: Assign roles and permissions to users
 2. **Creating Foreign Data Wrappers (FDWs)**: Set up FDWs and server definition for cross-database queries.
