@@ -33,11 +33,12 @@ module "postgres_servers" {
         allocated_storage = 50
       }
       init = {
-        users = [{ name = "myuser" }]
+        users = [{ id = "myuser", name = "myuser" }]
         databases = [{
-          name    = "mydb",
-          owner   = "myuser",
-          schemas = ["myschema1"]
+          id         = "mydb"
+          name       = "mydb",
+          owner_id   = "myuser",
+          schemas    = ["myschema1"]
           extensions = [{
             name   = "myextension",
             schema = "myschema1"
@@ -99,11 +100,15 @@ module "postrges_servers" {
         ]
       }
       init = {
-        users = [{ name = "user_1", password = "foobar" }, { name = "user_2", regenerate_password = true }]
+        users = [
+          { id = "user_1", name = "user_1", password = "foobar" },
+          { id = "user_2", name = "user_2", regenerate_password = true }
+        ]
         databases = [
           {
-            name    = "db_1",
-            owner   = "user_1",
+            id       = "db_1"
+            name     = "db_1",
+            owner_id = "user_1",
             schemas = ["schema_1_db_1"]
             extensions = [
               {
@@ -113,15 +118,16 @@ module "postrges_servers" {
             ]
           },
           {
-            name  = "db_2",
-            owner = "user_2",
+            id       = "db_2"
+            name     = "db_2",
+            owner_id = "user_2",
           }
         ]
         scripts = [
           {
-            id        = "create_foo_config_table"
-            script    = "../path/to/script.sql",
-            database  = "db_1",
+            id          = "create_foo"
+            script      = "../path/to/script.sql",
+            database_id = "db_1",
             variables = { "FOO" : "foo" },
             secrets = {
               "BAR" = { path = "/aws/secret/path", key = "mysecret" }
@@ -129,10 +135,10 @@ module "postrges_servers" {
             shell_script = false
           },
           {
-            id        = "update_user_1_role"
-            script    = "../path/to/script.sh",
-            database  = "db_2",
-            user      = "user_2",
+            id          = "update_user_1_role"
+            script      = "../path/to/script.sh",
+            database_id = "db_2",
+            user_id     = "user_2",
             variables = { "OTHER_USER" : "user_1" },
             secrets = {
               "OTHER_USER_PASSWORD" = {
