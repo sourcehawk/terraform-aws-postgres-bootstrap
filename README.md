@@ -17,7 +17,7 @@ Note that if you only want to bootstrap your database, and do not need an RDS in
 ### Minimal example
 
 ```hcl
-module "postgres_databases" {
+module "postgres_servers" {
   source = "terraform-aws-postgres-bootstrap"
 
   environment = "dev"
@@ -62,7 +62,7 @@ module "postgres_databases" {
 ### Full example
 
 ```hcl
-module "terraform-aws-postgres-bootstrap" {
+module "postrges_servers" {
   source = "terraform-aws-postgres-bootstrap"
 
   environment = "dev"
