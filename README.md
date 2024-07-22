@@ -1,6 +1,6 @@
 # Terraform AWS Postgres Bootstrap
 
-This module is designed to simplify and automate the provisioning of PostgreSQL databases on Amazon Web Services (AWS) with IaC capabilities. As is most often the case, you will have applications and systems deploying managing their own migrations. Those applications and systems however do not always address the initial configuration that needs to be done before those migrations can run, or before the software can use the database. This is where this module comes in handy.
+This module is designed to simplify and automate the provisioning of PostgreSQL databases on Amazon Web Services (AWS) with IaC capabilities. As is most often the case, you will have applications and systems deploying and managing their own migrations. Those applications and systems however do not always address the initial configuration that needs to be done before those migrations can run, or before the software can use the database. This is where this module comes in handy.
 
 Note that if you only want to bootstrap your database, and do not need an RDS instance, you can use the [postgres_init submodule](modules/postgres_init/).
 
