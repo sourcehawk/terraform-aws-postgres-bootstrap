@@ -78,5 +78,5 @@ variable "engine" {
 
 locals {
   id                = var.id == null ? "master" : var.id
-  database_password = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])
+  database_password = sensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])
 }

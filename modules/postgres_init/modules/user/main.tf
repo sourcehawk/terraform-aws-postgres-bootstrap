@@ -32,7 +32,7 @@ resource "null_resource" "update_username" {
       echo "Detected change in username but old_name was not provided. Skipping user renaming."
       exit 0
     fi
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     export NEW_USERNAME=${var.name}
     export OLD_USERNAME=${var.old_name == null ? "" : var.old_name}
     if [ "$NEW_USERNAME" = "$OLD_USERNAME" ]; then
@@ -64,9 +64,9 @@ resource "null_resource" "create_user_or_update_password" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     export USERNAME=${var.name}
-    export PASSWORD='${nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])}'
+    export PASSWORD='${sensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])}'
     chmod +x ${path.module}/sql/create_user.sh
     ${path.module}/sql/create_user.sh
     EOT

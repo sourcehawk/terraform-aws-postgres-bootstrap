@@ -83,5 +83,5 @@ variable "regenerate_password" {
 
 locals {
   id                = var.id == null ? "master" : var.id
-  password_supplied = nonsensitive(var.password == null ? "false" : "true")
+  password_supplied = sensitive(var.password == null ? "false" : "true")
 }

@@ -189,7 +189,7 @@ locals {
   ]
   master_password = (
     var.existing_user_credentials == null
-    ? nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.master.secret_string)["password"])
+    ? sensitive(jsondecode(data.aws_secretsmanager_secret_version.master.secret_string)["password"])
     : var.existing_user_credentials.password
   )
 }

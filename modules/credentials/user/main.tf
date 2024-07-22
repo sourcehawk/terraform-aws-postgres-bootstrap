@@ -21,7 +21,7 @@ resource "null_resource" "user_credentials" {
     if [ "${local.password_supplied}" = "false" ]; then
       PASSWORD=$(openssl rand -base64 256 | tr -dc 'A-Za-z0-9_!@#' | head -c 16)
     else
-      PASSWORD='${nonsensitive(var.password == null ? "" : var.password)}'
+      PASSWORD='${sensitive(var.password == null ? "" : var.password)}'
     fi
 
     if [ "$SECRET_EXISTS" = "not-found" ]; then

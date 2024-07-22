@@ -30,7 +30,7 @@ resource "null_resource" "create_database" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     export DATABASE_NAME="${var.name}"
     export DATABASE_OWNER="${local.owner_name}"
     chmod +x ${path.module}/sql/create_database.sh
@@ -55,7 +55,7 @@ resource "null_resource" "rename_database" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     if [ "${var.old_name == null ? "" : var.old_name}" = "" ]; then
       echo "Detected change in database name but old_name was not provided. Skipping database renaming."
       exit 0
@@ -92,7 +92,7 @@ resource "null_resource" "create_schema" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     psql \
     -v ON_ERROR_STOP=1 \
     -v schema_name="${each.value}" \
@@ -121,7 +121,7 @@ resource "null_resource" "create_extension" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     psql \
     -v ON_ERROR_STOP=1 \
     -v schema_name="${each.value.schema}" \

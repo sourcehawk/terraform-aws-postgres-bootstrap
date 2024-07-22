@@ -19,7 +19,7 @@ resource "null_resource" "shell_script" {
     })
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     chmod +x ${var.script}
     ${var.script}
     EOT
@@ -46,7 +46,7 @@ resource "null_resource" "sql_script" {
     }
     command = <<EOT
     set -e
-    export PGPASSWORD='${nonsensitive(local.pg_password)}'
+    export PGPASSWORD='${sensitive(local.pg_password)}'
     psql \
     -v ON_ERROR_STOP=1 \
     %{~for v in keys(var.variables)~}

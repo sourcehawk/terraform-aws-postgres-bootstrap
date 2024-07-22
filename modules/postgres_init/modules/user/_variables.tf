@@ -64,12 +64,12 @@ variable "regenerate_password" {
 }
 
 locals {
-  pg_password = (nonsensitive(var.conn.password) == null
-    ? nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.superuser[0].secret_string)["password"])
-    : nonsensitive(var.conn.password)
+  pg_password = (sensitive(var.conn.password) == null
+    ? sensitive(jsondecode(data.aws_secretsmanager_secret_version.superuser[0].secret_string)["password"])
+    : sensitive(var.conn.password)
   )
   user_password = (var.password == null
-    ? nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])
+    ? sensitive(jsondecode(data.aws_secretsmanager_secret_version.user.secret_string)["password"])
     : var.password
   )
 }

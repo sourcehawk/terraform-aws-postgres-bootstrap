@@ -289,7 +289,7 @@ resource "null_resource" "update_master_password" {
 
     wait_for_available ${aws_db_instance.this.identifier}
 
-    export PGPASSWORD='${nonsensitive(local.master_password)}'
+    export PGPASSWORD='${sensitive(local.master_password)}'
 
     # Wait for the password change to take effect
     attempts=0

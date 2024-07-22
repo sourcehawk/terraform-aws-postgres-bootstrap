@@ -83,16 +83,16 @@ variable "rerun_on_user_change" {
 }
 
 locals {
-  must_retrieve_user     = !(var.user_id == "master" && nonsensitive(var.conn.password) != null)
-  must_retrieve_database = !(var.database_id == "master" && nonsensitive(var.conn.password) != null)
+  must_retrieve_user     = !(var.user_id == "master" && sensitive(var.conn.password) != null)
+  must_retrieve_database = !(var.database_id == "master" && sensitive(var.conn.password) != null)
 }
 
 locals {
   secrets = {
     for k, v in var.secrets : k => (
       lookup(v, "key", null) == null
-      ? nonsensitive(data.aws_secretsmanager_secret_version.secrets[k].secret_string)
-      : nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.secrets[k].secret_string)[v.key])
+      ? sensitive(data.aws_secretsmanager_secret_version.secrets[k].secret_string)
+      : sensitive(jsondecode(data.aws_secretsmanager_secret_version.secrets[k].secret_string)[v.key])
     )
   }
   pg_user = (
@@ -102,8 +102,8 @@ locals {
   )
   pg_password = (
     local.must_retrieve_user
-    ? nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.user[0].secret_string)["password"])
-    : nonsensitive(var.conn.password)
+    ? sensitive(jsondecode(data.aws_secretsmanager_secret_version.user[0].secret_string)["password"])
+    : sensitive(var.conn.password)
   )
   pg_database = (
     local.must_retrieve_database
@@ -114,8 +114,8 @@ locals {
 
 locals {
   user_change = (
-    nonsensitive(var.conn.password) == null
+    sensitive(var.conn.password) == null
     ? data.aws_secretsmanager_secret_version.user[0].version_id
-    : sha256("${local.pg_user}-${sha256(nonsensitive(var.conn.password))}")
+    : sha256("${local.pg_user}-${sha256(sensitive(var.conn.password))}")
   )
 }

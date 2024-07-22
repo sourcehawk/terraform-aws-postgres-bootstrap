@@ -69,8 +69,8 @@ locals {
   owner_name     = jsondecode(data.aws_secretsmanager_secret_version.owner.secret_string)["username"]
   extensions_map = { for ext in var.extensions : "${ext.name}@${ext.schema}" => ext }
   schemas_map    = { for schema in var.schemas : schema => schema }
-  pg_password = (nonsensitive(var.conn.password) == null
-    ? nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.superuser[0].secret_string)["password"])
-    : nonsensitive(var.conn.password)
+  pg_password = (sensitive(var.conn.password) == null
+    ? sensitive(jsondecode(data.aws_secretsmanager_secret_version.superuser[0].secret_string)["password"])
+    : sensitive(var.conn.password)
   )
 }

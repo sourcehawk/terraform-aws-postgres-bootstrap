@@ -71,7 +71,7 @@ resource "null_resource" "postgres_docker" {
       "PG_DATABASE" = local.maintenance_database
       "PG_PORT"     = local.database_port
       # If you declare it here, it will be stored in the state file, you can move it inside the template to prevent that.
-      "PG_PASSWORD" = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.user_credentials.secret_string)["password"])
+      "PG_PASSWORD" = sensitive(jsondecode(data.aws_secretsmanager_secret_version.user_credentials.secret_string)["password"])
     }
     quiet   = true
     command = <<EOT
